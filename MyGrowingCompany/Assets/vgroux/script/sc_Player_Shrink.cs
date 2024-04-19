@@ -2,13 +2,13 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Player : MonoBehaviour
+public class ShrinkPlayer : MonoBehaviour
 {
 	public float shrinkSpeed = 0.1f; // The speed at which the player shrinks
 	public float minSize = 0.1f; // The minimum size the player can reach
-	public Rigidbody rb;
-
 	public float gravity = -9.81f;
+	
+	private Rigidbody rb;
 	private Vector3 initialScale; // The initial scale of the player
 
 	private void Start()

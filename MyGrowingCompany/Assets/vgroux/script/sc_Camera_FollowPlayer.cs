@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class FollowPlayer : MonoBehaviour
+public class sc_Camera_FollowPlayer : MonoBehaviour
 {
 	public Transform player; // The player GameObject's Transform
 	public Vector3 offset; // The offset between the camera and the player
