@@ -14,7 +14,7 @@ namespace enemy
 		public float inoffensiveSpeed = 25f;
 		public float detectionRadius = 5f;
 
-		public int hp = 10;
+		public int hp = 2;
 
 		protected Rigidbody rb;
 		protected bool isAggr = false;

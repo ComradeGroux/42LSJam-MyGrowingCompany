@@ -4,6 +4,7 @@ using UnityEditor;
 using UnityEngine;
 
 using enemy;
+using UnityEngine.SceneManagement;
 
 public class sc_Player : MonoBehaviour
 {
@@ -27,11 +28,13 @@ public class sc_Player : MonoBehaviour
 	private float moveHorizontal;
 	private Vector3 initialScale; // The initial scale of the player
 	private Rigidbody rb;
+	private float loadTime;
 	// Start is called before the first frame update
 	void Start()
     {
 		rb = GetComponent<Rigidbody>();
 		initialScale = transform.localScale;
+		loadTime = Time.time;
 	}
 
 	// Update is called once per frame
@@ -52,7 +55,7 @@ public class sc_Player : MonoBehaviour
 		gravity = -9.81f * 2 * transform.localScale.x;
 
 		moveHorizontal = Input.GetAxis("Horizontal");
-		if (moveHorizontal > 0.01f)
+		if (moveHorizontal > 0.01f || moveHorizontal < -0.01f)
 		{
 			Vector3 movement = new Vector3(moveHorizontal * moveSpeed, rb.velocity.y, 0f);
 			rb.velocity = movement;
@@ -83,7 +86,7 @@ public class sc_Player : MonoBehaviour
 	void shrinkHandler()
 	{
 		// Calculate the target scale based on the shrink speed and time
-		float t = Mathf.Clamp01(shrinkSpeed * Time.time);
+		float t = Mathf.Clamp01(shrinkSpeed * (Time.time - loadTime));
 		Vector3 targetScale = Vector3.Lerp(initialScale, Vector3.one * minSize, t);
 
 		// Scale the gravity force based on the player's scale
@@ -113,6 +116,7 @@ public class sc_Player : MonoBehaviour
 		if (health <= 0)
 		{
 			Debug.Log("IM DEEAAAAAD");
+			SceneManager.LoadScene(SceneManager.GetActiveScene().name);
 		}
 	}
 
