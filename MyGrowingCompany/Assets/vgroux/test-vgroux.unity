@@ -399,8 +399,8 @@ Transform:
   m_GameObject: {fileID: 633732095}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 10, y: 10, z: 10}
+  m_LocalPosition: {x: 450, y: 0, z: 0}
+  m_LocalScale: {x: 100, y: 10, z: 10}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
@@ -513,13 +513,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 934671885}
   serializedVersion: 2
-  m_LocalRotation: {x: -0.09276518, y: 0.8820798, z: -0.19555236, w: -0.41843677}
-  m_LocalPosition: {x: 2.77, y: 0, z: 1.83}
+  m_LocalRotation: {x: 0.2164396, y: 0, z: 0, w: 0.97629607}
+  m_LocalPosition: {x: 0, y: 24.2, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 641849672}
-  m_LocalEulerAnglesHint: {x: 25, y: 230.757, z: 0}
+  m_LocalEulerAnglesHint: {x: 25, y: 0, z: 0}
 --- !u!81 &934671887
 AudioListener:
   m_ObjectHideFlags: 0
@@ -592,7 +592,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   player: {fileID: 1014184578}
-  offset: {x: 3, y: 3, z: 3}
+  offset: {x: 0, y: -3, z: 5}
   initialFOV: 60
   minFOV: 60
 --- !u!1 &1014184577
@@ -608,6 +608,7 @@ GameObject:
   - component: {fileID: 1014184580}
   - component: {fileID: 1014184579}
   - component: {fileID: 1014184583}
+  - component: {fileID: 1014184584}
   - component: {fileID: 1014184582}
   m_Layer: 0
   m_Name: Capsule
@@ -625,7 +626,7 @@ Transform:
   m_GameObject: {fileID: 1014184577}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 6.5, z: -0.98}
+  m_LocalPosition: {x: 0, y: 6.5, z: 0}
   m_LocalScale: {x: 10, y: 10, z: 10}
   m_ConstrainProportionsScale: 1
   m_Children: []
@@ -744,8 +745,22 @@ Rigidbody:
   m_UseGravity: 1
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 64
+  m_Constraints: 112
   m_CollisionDetection: 0
+--- !u!114 &1014184584
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1014184577}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d4369b9652bce0c4a865b0df7875885a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  moveSpeed: 200
+  jumpSpeed: 1.5
 --- !u!1 &1029203911
 GameObject:
   m_ObjectHideFlags: 0
@@ -845,8 +860,8 @@ Transform:
   m_GameObject: {fileID: 1029203911}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 6.9, y: 10, z: -10.2}
-  m_LocalScale: {x: 41.894012, y: 20, z: 1}
+  m_LocalPosition: {x: 436, y: 10, z: 30.3}
+  m_LocalScale: {x: 900, y: 20, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}

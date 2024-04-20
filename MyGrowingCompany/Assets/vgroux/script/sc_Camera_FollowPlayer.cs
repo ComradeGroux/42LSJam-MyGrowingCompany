@@ -23,7 +23,7 @@ public class sc_Camera_FollowPlayer : MonoBehaviour
 
 		// Adjust the camera's position to maintain the same distance from the player
 		Vector3 scaledOffset = offset * scaleFactor;
-		transform.position = player.position + scaledOffset;
+		transform.position = player.position - scaledOffset;
 
 		// Calculate the new field of view based on the scale factor
 		float newFOV = Mathf.Lerp(initialFOV, minFOV, 1 - scaleFactor);
