@@ -23,6 +23,7 @@ public class sc_Player_Weapon : MonoBehaviour
 		if (timeSinceLastAttack > attackDuration)
 		{
 			canDmg = false;
+			Debug.Log("end attack");
 		}
 	}
 
@@ -37,7 +38,6 @@ public class sc_Player_Weapon : MonoBehaviour
 	{
 		canDmg = false;
 		Debug.Log("end attack");
-
 	}
 
 	private void OnCollisionEnter(Collision collision)
