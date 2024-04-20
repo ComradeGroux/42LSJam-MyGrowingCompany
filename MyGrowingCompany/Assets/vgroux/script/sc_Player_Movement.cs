@@ -24,8 +24,7 @@ public class sc_Player_Movement : MonoBehaviour
 		float moveHorizontal = Input.GetAxis("Horizontal");
 		if (moveHorizontal != 0 )
 		{
-			Vector3 movement = new Vector3(moveHorizontal, 0f, 0f) * moveSpeed;
-			movement.y = rb.velocity.y;
+			Vector3 movement = new Vector3(moveHorizontal * moveSpeed, rb.velocity.y, 0f);
 			rb.velocity = movement;
 		}
 

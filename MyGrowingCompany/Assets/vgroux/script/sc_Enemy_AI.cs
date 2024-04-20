@@ -11,6 +11,7 @@ public class sc_Enemy_AI : MonoBehaviour
 	public float detectionRadius = 5f;
 
 	private Rigidbody rb;
+    private bool isAggr = false;
 
     // Start is called before the first frame update
     void Start()
@@ -24,25 +25,46 @@ public class sc_Enemy_AI : MonoBehaviour
 		if (player.localScale.x < transform.localScale.x) {
 			
             AggressiveBehavior();
+            isAggr = true;
         }
         else
         {
             InoffensiveBehavior();
-        }
+			isAggr = false;
+		}
     }
 
     private void AggressiveBehavior()
     {
-		// Move towards the player
 		Vector3 direction = (player.position - transform.position).normalized;
 		rb.velocity = direction * aggressiveSpeed;
-
 	}
 
     private void InoffensiveBehavior()
     {
-		Vector3 direction = (player.position + transform.position).normalized;
+		Vector3 direction = (transform.position - player.position).normalized;
 		rb.velocity = direction * inoffensiveSpeed;
-
 	}
+
+	private void OnTriggerEnter(Collider other)
+	{
+        if (isAggr)
+        {
+		    if (other.gameObject.CompareTag("Player")) {
+			    // COLLISION WITH THE PLAYER
+			    sc_Player_Health playerhp = other.gameObject.GetComponent<sc_Player_Health>();
+                playerhp.takeDamage();
+            }
+        }
+	}
+
+    public bool isInoffensive()
+    {
+        return !isAggr;
+    }
+
+    public bool isAggressive()
+    {
+        return isAggr;
+    }
 }
