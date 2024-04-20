@@ -5,13 +5,28 @@ using UnityEngine;
 public class sc_Player : MonoBehaviour
 {
 	public int health = 10;
+	public float moveMaxSpeed = 20f;
+	public float runAccelAmount = 5f;
+	public float runDeccelAmount = 5f;
+
+
+
+
+
+
+
 	public float moveSpeed = 10f;
 	public float jumpSpeed = 4f;
 	public float shrinkSpeed = 0.025f; // The speed at which the player shrinks
 	public float minSize = 0.1f; // The minimum size the player can reach
-	
-	private float gravity = 9.81f * 4f;
-	private float initJumpHeight = 2f;
+	public float gravity = 9.81f * 4f;
+
+	public float initJumpHeight = 2f;
+
+
+
+
+	private float moveHorizontal;
 	private Vector3 initialScale; // The initial scale of the player
 	private Rigidbody rb;
 
@@ -29,9 +44,17 @@ public class sc_Player : MonoBehaviour
 		inputHandler();
 	}
 
+	private void FixedUpdate()
+	{
+		
+	}
+
+
 	void inputHandler()
 	{
-		float moveHorizontal = Input.GetAxis("Horizontal");
+		gravity = -9.81f * 2 * transform.localScale.x;
+
+		moveHorizontal = Input.GetAxis("Horizontal");
 		if (moveHorizontal != 0)
 		{
 			Vector3 movement = new Vector3(moveHorizontal * moveSpeed, rb.velocity.y, 0f);
@@ -40,8 +63,7 @@ public class sc_Player : MonoBehaviour
 
 		if (Input.GetKeyDown("space"))
 		{
-			float jumpHeight = initJumpHeight * transform.localScale.y;
-			//Debug.Log("jumpHeight = " +  jumpHeight);
+			float jumpHeight = initJumpHeight;
 			rb.velocity = new Vector3(rb.velocity.x, CalculateJumpSpeed(jumpHeight) * jumpSpeed, rb.velocity.z);
 		}
 
@@ -59,16 +81,21 @@ public class sc_Player : MonoBehaviour
 		float t = Mathf.Clamp01(shrinkSpeed * Time.time);
 		Vector3 targetScale = Vector3.Lerp(initialScale, Vector3.one * minSize, t);
 
+		// Scale the gravity force based on the player's scale
+		float scaleFactor = targetScale.y;
+
 		// Set the player's scale to the target scale
 		transform.localScale = targetScale;
-
-		// Scale the gravity force based on the player's scale
-		float scaleFactor = Mathf.Max(targetScale.x, targetScale.y);
+		
 		Vector3 scaledGravity = Vector3.down * (scaleFactor / gravity) * 10f;
 
-		Debug.Log(scaledGravity);
 		// Apply the scaled gravity force to the Rigidbody
 		rb.AddForce(scaledGravity, ForceMode.Acceleration);
+	}
+	void attack()
+	{
+		// TRIGGER ANIMATION
+
 	}
 
 	public void takeDamage()
@@ -85,13 +112,10 @@ public class sc_Player : MonoBehaviour
 	{
 		if (other.gameObject.CompareTag("Enemy"))
 		{
-			Debug.Log("THAT AN ENEMY");
 			sc_Enemy_AI enemy = other.gameObject.GetComponent<sc_Enemy_AI>();
 			if (enemy.isInoffensive())
 				Destroy(other.gameObject);
 		}
-		else
-			Debug.Log("Friend");
 	}
 
 	float CalculateJumpSpeed(float targetJumpHeight)
@@ -100,9 +124,4 @@ public class sc_Player : MonoBehaviour
 		return Mathf.Sqrt(-2f * Physics.gravity.y * targetJumpHeight);
 	}
 
-	void attack()
-	{
-		// TRIGGER ANIMATION
-
-	}
 }
