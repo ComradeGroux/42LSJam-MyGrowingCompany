@@ -17,10 +17,10 @@ public class sc_Player : MonoBehaviour
 	public float jumpSpeed = 4f;
 	public float shrinkSpeed = 0.025f; // The speed at which the player shrinks
 	public float minSize = 0.1f; // The minimum size the player can reach
-	public float gravity = 9.81f * 4f;
+	public float gravity = -9.81f * 4f;
 	public sc_Player_Weapon weapon;
 
-	public float initJumpHeight = 2f;
+	public float initJumpHeight = 4f;
 
 
 
@@ -52,7 +52,7 @@ public class sc_Player : MonoBehaviour
 		gravity = -9.81f * 2 * transform.localScale.x;
 
 		moveHorizontal = Input.GetAxis("Horizontal");
-		if (moveHorizontal != 0)
+		if (moveHorizontal > 0.01f)
 		{
 			Vector3 movement = new Vector3(moveHorizontal * moveSpeed, rb.velocity.y, 0f);
 			rb.velocity = movement;
@@ -64,7 +64,8 @@ public class sc_Player : MonoBehaviour
 		if (Input.GetKeyDown("space"))
 		{
 			float jumpHeight = initJumpHeight;
-			rb.velocity = new Vector3(rb.velocity.x, CalculateJumpSpeed(jumpHeight) * jumpSpeed, rb.velocity.z);
+			Vector3 jump = new Vector3(rb.velocity.x, CalculateJumpSpeed(jumpHeight * transform.localScale.y) * jumpSpeed, 0);
+			rb.velocity = jump;
 		}
 
 		// Mouse click input (optional)
@@ -91,10 +92,12 @@ public class sc_Player : MonoBehaviour
 		// Set the player's scale to the target scale
 		transform.localScale = targetScale;
 		
-		Vector3 scaledGravity = Vector3.down * (scaleFactor / gravity) * 10f;
+		Vector3 scaledGravity = Vector3.up * (gravity / targetScale.y);
+		Physics.gravity = new Vector3(0, gravity * 1.5f, 0);
+		Debug.Log("pg: " + Physics.gravity + "\tsg: " + scaledGravity);
 
 		// Apply the scaled gravity force to the Rigidbody
-		rb.AddForce(scaledGravity, ForceMode.Acceleration);
+		//rb.AddForce(scaledGravity, ForceMode.Acceleration);
 	}
 	void attack()
 	{

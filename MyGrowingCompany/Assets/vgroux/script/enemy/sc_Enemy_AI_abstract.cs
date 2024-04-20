@@ -10,8 +10,8 @@ namespace enemy
 	public abstract class sc_Enemy_AI_abstract : MonoBehaviour
 	{
 		public Transform player;
-		public float aggressiveSpeed = 9f;
-		public float inoffensiveSpeed = 4f;
+		public float aggressiveSpeed = 50f;
+		public float inoffensiveSpeed = 25f;
 		public float detectionRadius = 5f;
 
 		public int hp = 10;
