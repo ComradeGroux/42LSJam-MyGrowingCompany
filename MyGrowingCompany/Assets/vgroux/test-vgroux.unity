@@ -537,6 +537,26 @@ PrefabInstance:
       propertyPath: m_Materials.Array.data[0]
       value: 
       objectReference: {fileID: 2100000, guid: 96af64f3c1ba0d141917a9ab8dfe5d47, type: 2}
+    - target: {fileID: -5515814230678881494, guid: 3daa6bb64373ac7498778192b73b13f8, type: 3}
+      propertyPath: m_TagString
+      value: Player
+      objectReference: {fileID: 0}
+    - target: {fileID: -4819223349682164798, guid: 3daa6bb64373ac7498778192b73b13f8, type: 3}
+      propertyPath: m_TagString
+      value: Player
+      objectReference: {fileID: 0}
+    - target: {fileID: -4161941866756593233, guid: 3daa6bb64373ac7498778192b73b13f8, type: 3}
+      propertyPath: m_TagString
+      value: Player
+      objectReference: {fileID: 0}
+    - target: {fileID: -2967779823121162365, guid: 3daa6bb64373ac7498778192b73b13f8, type: 3}
+      propertyPath: m_TagString
+      value: Player
+      objectReference: {fileID: 0}
+    - target: {fileID: -1563168748555019680, guid: 3daa6bb64373ac7498778192b73b13f8, type: 3}
+      propertyPath: m_TagString
+      value: Player
+      objectReference: {fileID: 0}
     - target: {fileID: -893354179258870227, guid: 3daa6bb64373ac7498778192b73b13f8, type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
@@ -545,6 +565,10 @@ PrefabInstance:
       propertyPath: m_Materials.Array.data[0]
       value: 
       objectReference: {fileID: 2100000, guid: 96af64f3c1ba0d141917a9ab8dfe5d47, type: 2}
+    - target: {fileID: 481190738571393584, guid: 3daa6bb64373ac7498778192b73b13f8, type: 3}
+      propertyPath: m_TagString
+      value: Player
+      objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 3daa6bb64373ac7498778192b73b13f8, type: 3}
       propertyPath: m_Name
       value: player_uv
@@ -557,10 +581,18 @@ PrefabInstance:
       propertyPath: m_Materials.Array.data[0]
       value: 
       objectReference: {fileID: 2100000, guid: 96af64f3c1ba0d141917a9ab8dfe5d47, type: 2}
+    - target: {fileID: 3157832777161008091, guid: 3daa6bb64373ac7498778192b73b13f8, type: 3}
+      propertyPath: m_TagString
+      value: Player
+      objectReference: {fileID: 0}
     - target: {fileID: 4905092081231977874, guid: 3daa6bb64373ac7498778192b73b13f8, type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
       objectReference: {fileID: 2100000, guid: 96af64f3c1ba0d141917a9ab8dfe5d47, type: 2}
+    - target: {fileID: 6624212541525201663, guid: 3daa6bb64373ac7498778192b73b13f8, type: 3}
+      propertyPath: m_TagString
+      value: Player
+      objectReference: {fileID: 0}
     - target: {fileID: 8449996119470504636, guid: 3daa6bb64373ac7498778192b73b13f8, type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
@@ -582,6 +614,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 3daa6bb64373ac7498778192b73b13f8, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1486179048}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 3daa6bb64373ac7498778192b73b13f8, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1486179051}
     - targetCorrespondingSourceObject: {fileID: -4819223349682164798, guid: 3daa6bb64373ac7498778192b73b13f8, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1061076738}
@@ -760,7 +795,7 @@ GameObject:
   - component: {fileID: 821542400}
   - component: {fileID: 821542399}
   - component: {fileID: 821542404}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Enemy
   m_TagString: Enemy
   m_Icon: {fileID: 0}
@@ -780,9 +815,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   player: {fileID: 1486179047}
-  aggressiveSpeed: 9
+  aggressiveSpeed: 12
   inoffensiveSpeed: 5
   detectionRadius: 5
+  hp: 2
 --- !u!135 &821542400
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -1034,9 +1070,10 @@ GameObject:
   - component: {fileID: 934671888}
   - component: {fileID: 934671887}
   - component: {fileID: 934671889}
+  - component: {fileID: 934671890}
   m_Layer: 0
   m_Name: Camera
-  m_TagString: Untagged
+  m_TagString: MainCamera
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1131,6 +1168,20 @@ MonoBehaviour:
   offset: {x: 0, y: -3, z: 10}
   initialFOV: 60
   minFOV: 60
+--- !u!114 &934671890
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 934671885}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 42cd8dcae69d178488f5efa28e7c7e78, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  shader: {fileID: 4800000, guid: 95703b29f49b899499233ea7308bb800, type: 3}
+  BlockCount: 486
 --- !u!1 &1029203911
 GameObject:
   m_ObjectHideFlags: 0
@@ -1487,7 +1538,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 25d4ecc984d9f184d801d3013a939f6a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  health: 10
+  health: 1
   moveMaxSpeed: 14
   runAccelAmount: 8
   runDeccelAmount: 24
@@ -1496,6 +1547,7 @@ MonoBehaviour:
   shrinkSpeed: 0.025
   minSize: 0.1
   gravity: 39.24
+  weapon: {fileID: 1486179051}
   initJumpHeight: 2
 --- !u!54 &1486179049
 Rigidbody:
@@ -1546,6 +1598,19 @@ MeshCollider:
   m_Convex: 1
   m_CookingOptions: 30
   m_Mesh: {fileID: 0}
+--- !u!114 &1486179051
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1486179046}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 295cc0e9657c05944961be9b0908839b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  attackDuration: 1
 --- !u!1 &1563900775
 GameObject:
   m_ObjectHideFlags: 0

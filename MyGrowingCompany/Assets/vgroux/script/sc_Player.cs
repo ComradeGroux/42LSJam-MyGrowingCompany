@@ -1,6 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor;
 using UnityEngine;
+
+using enemy;
 
 public class sc_Player : MonoBehaviour
 {
@@ -10,26 +13,20 @@ public class sc_Player : MonoBehaviour
 	public float runDeccelAmount = 5f;
 
 
-
-
-
-
-
 	public float moveSpeed = 10f;
 	public float jumpSpeed = 4f;
 	public float shrinkSpeed = 0.025f; // The speed at which the player shrinks
 	public float minSize = 0.1f; // The minimum size the player can reach
 	public float gravity = 9.81f * 4f;
+	public sc_Player_Weapon weapon;
 
 	public float initJumpHeight = 2f;
-
 
 
 
 	private float moveHorizontal;
 	private Vector3 initialScale; // The initial scale of the player
 	private Rigidbody rb;
-
 	// Start is called before the first frame update
 	void Start()
     {
@@ -59,6 +56,9 @@ public class sc_Player : MonoBehaviour
 		{
 			Vector3 movement = new Vector3(moveHorizontal * moveSpeed, rb.velocity.y, 0f);
 			rb.velocity = movement;
+			movement.y = 0f;
+			movement.z = 0f;
+			transform.rotation = Quaternion.LookRotation(movement);
 		}
 
 		if (Input.GetKeyDown("space"))
@@ -70,9 +70,13 @@ public class sc_Player : MonoBehaviour
 		// Mouse click input (optional)
 		if (Input.GetMouseButtonDown(0))
 		{
-			Debug.Log("RIGHT CLICKED");
-			attack();
+			weapon.Attack();
 		}
+	}
+
+	public void StopAttack()
+	{
+		weapon.StopAttack();
 	}
 
 	void shrinkHandler()
@@ -102,6 +106,7 @@ public class sc_Player : MonoBehaviour
 	{
 		health--;
 
+		Debug.Log("Player hitted");
 		if (health <= 0)
 		{
 			Debug.Log("IM DEEAAAAAD");
@@ -112,9 +117,11 @@ public class sc_Player : MonoBehaviour
 	{
 		if (other.gameObject.CompareTag("Enemy"))
 		{
-			sc_Enemy_AI enemy = other.gameObject.GetComponent<sc_Enemy_AI>();
+			sc_Enemy_AI_abstract enemy = other.gameObject.GetComponent<sc_Enemy_AI_abstract>();
 			if (enemy.isInoffensive())
-				Destroy(other.gameObject);
+			{
+				//Destroy(other.gameObject);
+			}
 		}
 	}
 
