@@ -52,7 +52,7 @@ public class sc_Enemy_AI : MonoBehaviour
         {
 		    if (other.gameObject.CompareTag("Player")) {
 			    // COLLISION WITH THE PLAYER
-			    sc_Player_Health playerhp = other.gameObject.GetComponent<sc_Player_Health>();
+			    sc_Player playerhp = other.gameObject.GetComponent<sc_Player>();
                 playerhp.takeDamage();
             }
         }
