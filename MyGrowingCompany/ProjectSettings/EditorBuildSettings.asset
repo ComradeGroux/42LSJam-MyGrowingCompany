@@ -14,4 +14,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/bolan/lvl_1.unity
     guid: 034aa792a0e6d8346982ee490c210469
+  - enabled: 1
+    path: Assets/vgroux/EndingScene.unity
+    guid: fc21961ba06046b44afe8c81ffc73c22
   m_configObjects: {}
