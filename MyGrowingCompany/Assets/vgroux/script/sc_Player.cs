@@ -22,6 +22,7 @@ public class sc_Player : MonoBehaviour
 
 	public LayerMask groundMask;
 
+	private Animator anim;
 	private float jumpSpeed = 2.5f;
 	private float gravity = -9.81f * 4f;
 	private float invicibleTime = 1f;
@@ -39,6 +40,7 @@ public class sc_Player : MonoBehaviour
 	{
 		rb = GetComponent<Rigidbody>();
 		weapon = GetComponent<sc_Player_Weapon>();
+		anim = GetComponentInChildren<Animator>();
 		initialScale = meshToShrink.localScale;
 		transform.Rotate(-90f, 90f, 0f);
 		loadTime = Time.time;
@@ -69,6 +71,8 @@ public class sc_Player : MonoBehaviour
 		moveHorizontal = Input.GetAxis("Horizontal");
 		if (moveHorizontal > 0.01f || moveHorizontal < -0.01f)
 		{
+			anim.ResetTrigger("idle");
+			anim.SetTrigger("walk");
 			Vector3 movement = new Vector3(moveHorizontal * transform.localScale.x * moveSpeed, rb.velocity.y, 0f);
 			rb.velocity = movement;
 
@@ -86,11 +90,19 @@ public class sc_Player : MonoBehaviour
 					transform.Rotate(0f, 0f, 180f);
 				}
 			}
-			lastDir = Mathf.Sign(moveHorizontal);
+			lastDir = Mathf.Sign(movement.x);
+		}
+		else
+		{
+			anim.ResetTrigger("walk");
+			anim.SetTrigger("idle");
 		}
 
 		if (Input.GetKeyDown("space") && nbJump < 2)
 		{
+			anim.ResetTrigger("walk");
+			anim.ResetTrigger("idle");
+			anim.SetTrigger("jump");
 			float jumpHeight = transform.localScale.y * jumpMult;
 			float calculatedJumpSpeed = CalculateJumpSpeed(jumpHeight);
 			Vector3 jump = new Vector3(rb.velocity.x, calculatedJumpSpeed * jumpSpeed, 0);
@@ -101,6 +113,7 @@ public class sc_Player : MonoBehaviour
 		// Mouse click input (optional)
 		if (Input.GetMouseButtonDown(0))
 		{
+			anim.SetTrigger("attack");
 			weapon.Attack();
 		}
 	}
