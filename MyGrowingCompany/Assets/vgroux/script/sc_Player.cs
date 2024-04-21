@@ -176,6 +176,10 @@ public class sc_Player : MonoBehaviour
 			isDead = true;
 			die();
 		}
+		else if (other.gameObject.CompareTag("End"))
+		{
+			sc_GameSession_Manager.instance.LoadEndingScene();
+		}
 		else
 		{
 			if (Time.time - timeLastDmg > invicibleTime)

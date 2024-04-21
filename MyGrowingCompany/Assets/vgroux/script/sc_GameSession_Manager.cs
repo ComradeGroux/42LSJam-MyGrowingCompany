@@ -7,6 +7,7 @@ public class sc_GameSession_Manager : MonoBehaviour
 {
 	public static sc_GameSession_Manager instance;
 
+	public float startTime;
 	public int playerDeathCount = 0;
 
 	private void Awake()
@@ -14,6 +15,7 @@ public class sc_GameSession_Manager : MonoBehaviour
 		if (instance == null)
 		{
 			instance = this;
+			startTime = Time.time;
 			DontDestroyOnLoad(gameObject);
 		}
 		else
