@@ -57,7 +57,6 @@ namespace enemy
 		{
 			if (isAggr)
 			{
-				Debug.Log("I'm aggressive");
 				if (other.gameObject.CompareTag("Player"))
 				{
 					// COLLISION WITH THE PLAYER
@@ -66,10 +65,6 @@ namespace enemy
 					{
 						player.takeDamage();
 					}
-				}
-				else
-				{
-					Debug.Log("That not an enemy");
 				}
 			}
 		}

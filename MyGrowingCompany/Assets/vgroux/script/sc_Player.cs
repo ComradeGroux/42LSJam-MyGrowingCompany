@@ -5,41 +5,55 @@ using UnityEngine;
 
 using enemy;
 using UnityEngine.SceneManagement;
+using Assets.Pixelation.Scripts;
 
 public class sc_Player : MonoBehaviour
 {
 	public int health = 10;
-	public float moveMaxSpeed = 20f;
-	public float runAccelAmount = 5f;
-	public float runDeccelAmount = 5f;
-
 
 	public float moveSpeed = 10f;
-	public float jumpSpeed = 4f;
-	public float shrinkSpeed = 0.025f; // The speed at which the player shrinks
+	public float jumpMult = 1f;
+	public float shrinkSpeed = 0.01f; // The speed at which the player shrinks
 	public float minSize = 0.1f; // The minimum size the player can reach
-	public float gravity = -9.81f * 4f;
-	public sc_Player_Weapon weapon;
 
-	public float initJumpHeight = 4f;
+	public Pixelation shaderPixel;
 
+	public Transform meshToShrink;
 
+	public LayerMask groundMask;
 
+	private Animator anim;
+	private float jumpSpeed = 2.5f;
+	private float gravity = -9.81f * 4f;
+	private float invicibleTime = 1f;
+	private float timeLastDmg;
+	private sc_Player_Weapon weapon;
 	private float moveHorizontal;
 	private Vector3 initialScale; // The initial scale of the player
 	private Rigidbody rb;
 	private float loadTime;
+	private float currentLoadTime;
+	private float lastDir = 1f;
+	private int nbJump = 0;
 	// Start is called before the first frame update
 	void Start()
-    {
+	{
 		rb = GetComponent<Rigidbody>();
-		initialScale = transform.localScale;
+		weapon = GetComponent<sc_Player_Weapon>();
+		anim = GetComponentInChildren<Animator>();
+		initialScale = meshToShrink.localScale;
+		transform.Rotate(-90f, 90f, 0f);
 		loadTime = Time.time;
+		currentLoadTime = Time.time;
+		timeLastDmg = Time.time;
 	}
 
 	// Update is called once per frame
 	void Update()
-    {
+	{
+		if (Physics.CheckSphere(transform.position, 0.1f, groundMask)) {
+			nbJump = 0;
+		}
 		shrinkHandler();
 		inputHandler();
 	}
@@ -57,31 +71,53 @@ public class sc_Player : MonoBehaviour
 		moveHorizontal = Input.GetAxis("Horizontal");
 		if (moveHorizontal > 0.01f || moveHorizontal < -0.01f)
 		{
-			Vector3 movement = new Vector3(moveHorizontal * moveSpeed, rb.velocity.y, 0f);
+			anim.ResetTrigger("idle");
+			anim.SetTrigger("walk");
+			Vector3 movement = new Vector3(moveHorizontal * transform.localScale.x * moveSpeed, rb.velocity.y, 0f);
 			rb.velocity = movement;
-			movement.y = 0f;
-			movement.z = 0f;
-			transform.rotation = Quaternion.LookRotation(movement);
+
+			if (Mathf.Sign(movement.x) > 0f)
+			{
+				if (lastDir != 1)
+				{
+					transform.Rotate(0f, 0f, -180f);
+				}
+			}
+			else
+			{
+				if (lastDir == 1)
+				{
+					transform.Rotate(0f, 0f, 180f);
+				}
+			}
+			lastDir = Mathf.Sign(movement.x);
+		}
+		else
+		{
+			anim.ResetTrigger("walk");
+			anim.SetTrigger("idle");
 		}
 
-		if (Input.GetKeyDown("space"))
+		if (Input.GetKeyDown("space") && nbJump < 2)
 		{
-			float jumpHeight = initJumpHeight;
-			Vector3 jump = new Vector3(rb.velocity.x, CalculateJumpSpeed(jumpHeight * transform.localScale.y) * jumpSpeed, 0);
+			anim.ResetTrigger("walk");
+			anim.ResetTrigger("idle");
+			anim.SetTrigger("jump");
+			float jumpHeight = transform.localScale.y * jumpMult;
+			float calculatedJumpSpeed = CalculateJumpSpeed(jumpHeight);
+			Vector3 jump = new Vector3(rb.velocity.x, calculatedJumpSpeed * jumpSpeed, 0);
 			rb.velocity = jump;
+			nbJump += 1;
 		}
 
 		// Mouse click input (optional)
 		if (Input.GetMouseButtonDown(0))
 		{
+			anim.SetTrigger("attack");
 			weapon.Attack();
 		}
 	}
 
-	public void StopAttack()
-	{
-		weapon.StopAttack();
-	}
 
 	void shrinkHandler()
 	{
@@ -93,42 +129,63 @@ public class sc_Player : MonoBehaviour
 		float scaleFactor = targetScale.y;
 
 		// Set the player's scale to the target scale
-		transform.localScale = targetScale;
+		meshToShrink.localScale = targetScale;
 		
 		Vector3 scaledGravity = Vector3.up * (gravity / targetScale.y);
 		Physics.gravity = new Vector3(0, gravity * 1.5f, 0);
-		Debug.Log("pg: " + Physics.gravity + "\tsg: " + scaledGravity);
-
-		// Apply the scaled gravity force to the Rigidbody
-		//rb.AddForce(scaledGravity, ForceMode.Acceleration);
-	}
-	void attack()
-	{
-		// TRIGGER ANIMATION
-
 	}
 
 	public void takeDamage()
 	{
-		health--;
+		if (Time.time - timeLastDmg > invicibleTime)
+		{
+			health--;
 
-		Debug.Log("Player hitted");
+			Debug.Log("Player hitted\tcurrent hp: " + health);
+			StartCoroutine(takeDamage_PixelShader());
+			timeLastDmg = Time.time;
+		}
+	}
+
+	private void die()
+	{
+		Debug.Log("The player died");
+		SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+	}
+
+	private IEnumerator takeDamage_PixelShader()
+	{
+		shaderPixel.BlockCount -= 50;
 		if (health <= 0)
 		{
-			Debug.Log("IM DEEAAAAAD");
-			SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+			die();
 		}
+		yield return new WaitForSeconds(0.5f);
+		shaderPixel.BlockCount += 50;
 	}
 
 	private void OnTriggerEnter(Collider other)
 	{
-		if (other.gameObject.CompareTag("Enemy"))
+		Debug.Log("Collision");
+		if (Time.time - timeLastDmg > invicibleTime)
 		{
-			sc_Enemy_AI_abstract enemy = other.gameObject.GetComponent<sc_Enemy_AI_abstract>();
-			if (enemy.isInoffensive())
+			if (other.gameObject.CompareTag("Enemy"))
 			{
-				//Destroy(other.gameObject);
+				sc_Enemy_AI_abstract enemy = other.gameObject.GetComponent<sc_Enemy_AI_abstract>();
+				if (enemy.isInoffensive())
+				{
+					//Destroy(other.gameObject);
+				}
+				else
+				{
+					takeDamage();
+				}
 			}
+			timeLastDmg = Time.time;
+		}
+		if (other.gameObject.CompareTag("InstantDie"))
+		{
+			die();
 		}
 	}
 
@@ -137,5 +194,4 @@ public class sc_Player : MonoBehaviour
 		// Calculate the jump speed required to reach the target jump height
 		return Mathf.Sqrt(-2f * Physics.gravity.y * targetJumpHeight);
 	}
-
 }
