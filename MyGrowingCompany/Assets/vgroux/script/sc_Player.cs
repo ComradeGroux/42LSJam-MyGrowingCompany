@@ -116,6 +116,9 @@ public class sc_Player : MonoBehaviour
 			anim.SetTrigger("attack");
 			weapon.Attack();
 		}
+
+		if (Input.GetKeyDown("r"))
+			die();
 	}
 
 

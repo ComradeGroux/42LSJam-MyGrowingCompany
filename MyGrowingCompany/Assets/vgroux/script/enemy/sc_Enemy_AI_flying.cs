@@ -9,11 +9,13 @@ namespace enemy
 		protected override void AggressiveBehavior()
 		{
 			Vector3 direction = (player.position - transform.position).normalized;
+			direction.z = 0f;
 			rb.velocity = direction * aggressiveSpeed;
 		}
 		override protected void InoffensiveBehavior()
 		{
 			Vector3 direction = (transform.position - player.position).normalized;
+			direction.z = 0f;
 			rb.velocity = direction * inoffensiveSpeed;
 		}
 	}
