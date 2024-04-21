@@ -594,7 +594,7 @@ Rigidbody:
   m_UseGravity: 0
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 0
+  m_Constraints: 8
   m_CollisionDetection: 0
 --- !u!114 &58387610
 MonoBehaviour:
@@ -612,7 +612,7 @@ MonoBehaviour:
   aggressiveSpeed: 5
   inoffensiveSpeed: 2
   detectionRadius: 5
-  hp: 2
+  hp: 1
 --- !u!4 &58387611
 Transform:
   m_ObjectHideFlags: 0
@@ -622,7 +622,7 @@ Transform:
   m_GameObject: {fileID: 58387608}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: 1, z: -0, w: 0}
-  m_LocalPosition: {x: 8.210007, y: 48.739998, z: 0}
+  m_LocalPosition: {x: 8.210007, y: 48.739998, z: -4}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 1
   m_Children:
@@ -826,6 +826,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: be47389ac84351b47b686a74bc0765fc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  startTime: 0
   playerDeathCount: 0
 --- !u!4 &68442564
 Transform:
@@ -1853,7 +1854,7 @@ Rigidbody:
   m_UseGravity: 0
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 0
+  m_Constraints: 8
   m_CollisionDetection: 0
 --- !u!114 &399515432
 MonoBehaviour:
@@ -1871,7 +1872,7 @@ MonoBehaviour:
   aggressiveSpeed: 5
   inoffensiveSpeed: 2
   detectionRadius: 5
-  hp: 2
+  hp: 1
 --- !u!4 &399515433
 Transform:
   m_ObjectHideFlags: 0
@@ -1881,7 +1882,7 @@ Transform:
   m_GameObject: {fileID: 399515430}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: 1, z: -0, w: 0}
-  m_LocalPosition: {x: -76.17, y: 12.110001, z: 0}
+  m_LocalPosition: {x: -76.17, y: 12.110001, z: -4}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 1
   m_Children:
@@ -2355,7 +2356,7 @@ Rigidbody:
   m_UseGravity: 0
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 0
+  m_Constraints: 8
   m_CollisionDetection: 0
 --- !u!114 &567476079
 MonoBehaviour:
@@ -2373,7 +2374,7 @@ MonoBehaviour:
   aggressiveSpeed: 5
   inoffensiveSpeed: 2
   detectionRadius: 5
-  hp: 2
+  hp: 1
 --- !u!4 &567476080
 Transform:
   m_ObjectHideFlags: 0
@@ -2383,7 +2384,7 @@ Transform:
   m_GameObject: {fileID: 567476077}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: 1, z: -0, w: 0}
-  m_LocalPosition: {x: -43.429993, y: -0.7300005, z: 0}
+  m_LocalPosition: {x: -43.429993, y: -0.7300005, z: -4}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 1
   m_Children:
@@ -2741,7 +2742,7 @@ Rigidbody:
   m_UseGravity: 0
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 0
+  m_Constraints: 8
   m_CollisionDetection: 0
 --- !u!114 &652824869
 MonoBehaviour:
@@ -2759,7 +2760,7 @@ MonoBehaviour:
   aggressiveSpeed: 5
   inoffensiveSpeed: 2
   detectionRadius: 5
-  hp: 2
+  hp: 1
 --- !u!4 &652824870
 Transform:
   m_ObjectHideFlags: 0
@@ -2769,7 +2770,7 @@ Transform:
   m_GameObject: {fileID: 652824867}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: 1, z: -0, w: 0}
-  m_LocalPosition: {x: 23.070007, y: 74.3, z: 0}
+  m_LocalPosition: {x: 23.070007, y: 74.3, z: -4}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 1
   m_Children:
@@ -3684,7 +3685,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3391886538022465923, guid: 6444bebc730c5e74e8f4b875382b373b, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -4.0063057
+      value: -4
       objectReference: {fileID: 0}
     - target: {fileID: 3391886538022465923, guid: 6444bebc730c5e74e8f4b875382b373b, type: 3}
       propertyPath: m_LocalRotation.w
@@ -4557,7 +4558,7 @@ Transform:
   m_GameObject: {fileID: 936198811}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: 1, z: -0, w: 0}
-  m_LocalPosition: {x: -104.17, y: -1.7900004, z: 0}
+  m_LocalPosition: {x: -104.17, y: -1.7900004, z: -4}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 1
   m_Children:
@@ -4580,7 +4581,7 @@ MonoBehaviour:
   aggressiveSpeed: 10
   inoffensiveSpeed: 2
   detectionRadius: 5
-  hp: 2
+  hp: 1
 --- !u!54 &936198814
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -4786,7 +4787,7 @@ Rigidbody:
   m_UseGravity: 0
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 0
+  m_Constraints: 8
   m_CollisionDetection: 0
 --- !u!114 &955373731
 MonoBehaviour:
@@ -4804,7 +4805,7 @@ MonoBehaviour:
   aggressiveSpeed: 5
   inoffensiveSpeed: 2
   detectionRadius: 5
-  hp: 2
+  hp: 1
 --- !u!4 &955373732
 Transform:
   m_ObjectHideFlags: 0
@@ -4814,7 +4815,7 @@ Transform:
   m_GameObject: {fileID: 955373729}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: 1, z: -0, w: 0}
-  m_LocalPosition: {x: 4.1100006, y: 48.77, z: 0}
+  m_LocalPosition: {x: 4.1100006, y: 48.77, z: -4}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 1
   m_Children:
@@ -5922,7 +5923,7 @@ Rigidbody:
   m_UseGravity: 0
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 0
+  m_Constraints: 8
   m_CollisionDetection: 0
 --- !u!114 &1298059182
 MonoBehaviour:
@@ -5940,7 +5941,7 @@ MonoBehaviour:
   aggressiveSpeed: 5
   inoffensiveSpeed: 2
   detectionRadius: 5
-  hp: 2
+  hp: 1
 --- !u!4 &1298059183
 Transform:
   m_ObjectHideFlags: 0
@@ -5950,7 +5951,7 @@ Transform:
   m_GameObject: {fileID: 1298059180}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: 1, z: -0, w: 0}
-  m_LocalPosition: {x: -25.64, y: 45.36, z: 0}
+  m_LocalPosition: {x: -25.64, y: 45.36, z: -4}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 1
   m_Children:
@@ -6892,7 +6893,7 @@ Rigidbody:
   m_UseGravity: 0
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 0
+  m_Constraints: 8
   m_CollisionDetection: 0
 --- !u!114 &1530935993
 MonoBehaviour:
@@ -6910,7 +6911,7 @@ MonoBehaviour:
   aggressiveSpeed: 5
   inoffensiveSpeed: 2
   detectionRadius: 5
-  hp: 2
+  hp: 1
 --- !u!4 &1530935994
 Transform:
   m_ObjectHideFlags: 0
@@ -6920,7 +6921,7 @@ Transform:
   m_GameObject: {fileID: 1530935991}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: 1, z: -0, w: 0}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: -4}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 1
   m_Children:
@@ -7054,7 +7055,7 @@ Rigidbody:
   m_UseGravity: 0
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 0
+  m_Constraints: 8
   m_CollisionDetection: 0
 --- !u!114 &1540930502
 MonoBehaviour:
@@ -7072,7 +7073,7 @@ MonoBehaviour:
   aggressiveSpeed: 5
   inoffensiveSpeed: 2
   detectionRadius: 5
-  hp: 2
+  hp: 1
 --- !u!4 &1540930503
 Transform:
   m_ObjectHideFlags: 0
@@ -7082,7 +7083,7 @@ Transform:
   m_GameObject: {fileID: 1540930500}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: 1, z: -0, w: 0}
-  m_LocalPosition: {x: 38.270004, y: 0, z: 0}
+  m_LocalPosition: {x: 38.270004, y: 0, z: -4}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 1
   m_Children:
@@ -9477,7 +9478,7 @@ Rigidbody:
   m_UseGravity: 0
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 0
+  m_Constraints: 8
   m_CollisionDetection: 0
 --- !u!114 &1990832950
 MonoBehaviour:
@@ -9495,7 +9496,7 @@ MonoBehaviour:
   aggressiveSpeed: 5
   inoffensiveSpeed: 2
   detectionRadius: 5
-  hp: 2
+  hp: 1
 --- !u!4 &1990832951
 Transform:
   m_ObjectHideFlags: 0
@@ -9505,7 +9506,7 @@ Transform:
   m_GameObject: {fileID: 1990832948}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: 1, z: -0, w: 0}
-  m_LocalPosition: {x: 81.26999, y: 41.07, z: 0}
+  m_LocalPosition: {x: 81.26999, y: 41.07, z: -4}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 1
   m_Children:
@@ -10008,7 +10009,7 @@ Rigidbody:
   m_UseGravity: 0
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 0
+  m_Constraints: 8
   m_CollisionDetection: 0
 --- !u!114 &2082888084
 MonoBehaviour:
@@ -10026,7 +10027,7 @@ MonoBehaviour:
   aggressiveSpeed: 5
   inoffensiveSpeed: 2
   detectionRadius: 5
-  hp: 2
+  hp: 1
 --- !u!4 &2082888085
 Transform:
   m_ObjectHideFlags: 0
@@ -10036,7 +10037,7 @@ Transform:
   m_GameObject: {fileID: 2082888082}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: 1, z: -0, w: 0}
-  m_LocalPosition: {x: 85.76999, y: 41.07, z: 0}
+  m_LocalPosition: {x: 85.76999, y: 41.07, z: -4}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 1
   m_Children:
