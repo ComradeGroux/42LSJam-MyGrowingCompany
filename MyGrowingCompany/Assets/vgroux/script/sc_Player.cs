@@ -33,7 +33,7 @@ public class sc_Player : MonoBehaviour
 	private float loadTime;
 	private float currentLoadTime;
 	private float lastDir = 1f;
-	private bool isGrounded = true;
+	private int nbJump = 0;
 	// Start is called before the first frame update
 	void Start()
 	{
@@ -49,7 +49,9 @@ public class sc_Player : MonoBehaviour
 	// Update is called once per frame
 	void Update()
 	{
-		isGrounded = Physics.CheckSphere(transform.position, 0.2f, groundMask);
+		if (Physics.CheckSphere(transform.position, 0.1f, groundMask)) {
+			nbJump = 0;
+		}
 		shrinkHandler();
 		inputHandler();
 	}
@@ -87,12 +89,13 @@ public class sc_Player : MonoBehaviour
 			lastDir = Mathf.Sign(moveHorizontal);
 		}
 
-		if (Input.GetKeyDown("space") && isGrounded)
+		if (Input.GetKeyDown("space") && nbJump < 2)
 		{
 			float jumpHeight = transform.localScale.y * jumpMult;
 			float calculatedJumpSpeed = CalculateJumpSpeed(jumpHeight);
 			Vector3 jump = new Vector3(rb.velocity.x, calculatedJumpSpeed * jumpSpeed, 0);
 			rb.velocity = jump;
+			nbJump += 1;
 		}
 
 		// Mouse click input (optional)
