@@ -9,6 +9,8 @@ using Assets.Pixelation.Scripts;
 
 public class sc_Player : MonoBehaviour
 {
+	//public sc_GameSession_Manager gameSessionManager;
+
 	public int health = 10;
 
 	public float moveSpeed = 10f;
@@ -35,6 +37,8 @@ public class sc_Player : MonoBehaviour
 	private float currentLoadTime;
 	private float lastDir = 1f;
 	private int nbJump = 0;
+	private bool isPixelating = false;
+	private bool isDead = false;
 	// Start is called before the first frame update
 	void Start()
 	{
@@ -46,6 +50,8 @@ public class sc_Player : MonoBehaviour
 		loadTime = Time.time;
 		currentLoadTime = Time.time;
 		timeLastDmg = Time.time;
+
+		Debug.Log("total death: " + sc_GameSession_Manager.instance.playerDeathCount);
 	}
 
 	// Update is called once per frame
@@ -57,12 +63,6 @@ public class sc_Player : MonoBehaviour
 		shrinkHandler();
 		inputHandler();
 	}
-
-	private void FixedUpdate()
-	{
-		
-	}
-
 
 	void inputHandler()
 	{
@@ -137,55 +137,63 @@ public class sc_Player : MonoBehaviour
 
 	public void takeDamage()
 	{
-		if (Time.time - timeLastDmg > invicibleTime)
+		if (Time.time - timeLastDmg > invicibleTime && !isDead && !isPixelating)
 		{
 			health--;
-
-			Debug.Log("Player hitted\tcurrent hp: " + health);
-			StartCoroutine(takeDamage_PixelShader());
 			timeLastDmg = Time.time;
+
+			if (health <= 0)
+			{
+				isDead = true;
+				die();
+			}
+
+			isPixelating = true;
+			StartCoroutine(takeDamage_PixelShader());
 		}
 	}
 
 	private void die()
 	{
 		Debug.Log("The player died");
-		SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+		sc_GameSession_Manager.instance.playerDeathCount++;
+		sc_GameSession_Manager.instance.ReloadScene();
 	}
 
 	private IEnumerator takeDamage_PixelShader()
 	{
 		shaderPixel.BlockCount -= 50;
-		if (health <= 0)
-		{
-			die();
-		}
 		yield return new WaitForSeconds(0.5f);
 		shaderPixel.BlockCount += 50;
+		isPixelating = false;
 	}
 
 	private void OnTriggerEnter(Collider other)
 	{
 		Debug.Log("Collision");
-		if (Time.time - timeLastDmg > invicibleTime)
+		if (other.gameObject.CompareTag("InstantDie") && !isDead)
 		{
-			if (other.gameObject.CompareTag("Enemy"))
-			{
-				sc_Enemy_AI_abstract enemy = other.gameObject.GetComponent<sc_Enemy_AI_abstract>();
-				if (enemy.isInoffensive())
-				{
-					//Destroy(other.gameObject);
-				}
-				else
-				{
-					takeDamage();
-				}
-			}
-			timeLastDmg = Time.time;
-		}
-		if (other.gameObject.CompareTag("InstantDie"))
-		{
+			isDead = true;
 			die();
+		}
+		else
+		{
+			if (Time.time - timeLastDmg > invicibleTime)
+			{
+				if (other.gameObject.CompareTag("Enemy"))
+				{
+					sc_Enemy_AI_abstract enemy = other.gameObject.GetComponent<sc_Enemy_AI_abstract>();
+					if (enemy.isInoffensive())
+					{
+						//Destroy(other.gameObject);
+					}
+					else
+					{
+						takeDamage();
+					}
+				}
+				timeLastDmg = Time.time;
+			}
 		}
 	}
 
