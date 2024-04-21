@@ -10,32 +10,30 @@ using Assets.Pixelation.Scripts;
 public class sc_Player : MonoBehaviour
 {
 	public int health = 10;
-	public float moveMaxSpeed = 200f;
-	public float runAccelAmount = 5f;
-	public float runDeccelAmount = 5f;
-
 
 	public float moveSpeed = 10f;
-	public float jumpSpeed = 4f;
-	public float shrinkSpeed = 0.025f; // The speed at which the player shrinks
+	public float jumpMult = 1f;
+	public float shrinkSpeed = 0.01f; // The speed at which the player shrinks
 	public float minSize = 0.1f; // The minimum size the player can reach
-	public float gravity = -9.81f * 4f;
 
 	public Pixelation shaderPixel;
-	public float jumpMult = 1f;
-
-	public float timeLastDmg;
-	public float invicibleTime = 1f;
-
 
 	public Transform meshToShrink;
 
+	public LayerMask groundMask;
+
+	private float jumpSpeed = 2.5f;
+	private float gravity = -9.81f * 4f;
+	private float invicibleTime = 1f;
+	private float timeLastDmg;
 	private sc_Player_Weapon weapon;
 	private float moveHorizontal;
 	private Vector3 initialScale; // The initial scale of the player
 	private Rigidbody rb;
 	private float loadTime;
+	private float currentLoadTime;
 	private float lastDir = 1f;
+	private bool isGrounded = true;
 	// Start is called before the first frame update
 	void Start()
 	{
@@ -44,12 +42,14 @@ public class sc_Player : MonoBehaviour
 		initialScale = meshToShrink.localScale;
 		transform.Rotate(-90f, 90f, 0f);
 		loadTime = Time.time;
+		currentLoadTime = Time.time;
 		timeLastDmg = Time.time;
 	}
 
 	// Update is called once per frame
 	void Update()
 	{
+		isGrounded = Physics.CheckSphere(transform.position, 0.2f, groundMask);
 		shrinkHandler();
 		inputHandler();
 	}
@@ -87,7 +87,7 @@ public class sc_Player : MonoBehaviour
 			lastDir = Mathf.Sign(moveHorizontal);
 		}
 
-		if (Input.GetKeyDown("space"))
+		if (Input.GetKeyDown("space") && isGrounded)
 		{
 			float jumpHeight = transform.localScale.y * jumpMult;
 			float calculatedJumpSpeed = CalculateJumpSpeed(jumpHeight);
@@ -131,13 +131,18 @@ public class sc_Player : MonoBehaviour
 		}
 	}
 
+	private void die()
+	{
+		Debug.Log("The player died");
+		SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+	}
+
 	private IEnumerator takeDamage_PixelShader()
 	{
 		shaderPixel.BlockCount -= 50;
 		if (health <= 0)
 		{
-			Debug.Log("The player died");
-			SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+			die();
 		}
 		yield return new WaitForSeconds(0.5f);
 		shaderPixel.BlockCount += 50;
@@ -145,6 +150,7 @@ public class sc_Player : MonoBehaviour
 
 	private void OnTriggerEnter(Collider other)
 	{
+		Debug.Log("Collision");
 		if (Time.time - timeLastDmg > invicibleTime)
 		{
 			if (other.gameObject.CompareTag("Enemy"))
@@ -160,6 +166,10 @@ public class sc_Player : MonoBehaviour
 				}
 			}
 			timeLastDmg = Time.time;
+		}
+		if (other.gameObject.CompareTag("InstantDie"))
+		{
+			die();
 		}
 	}
 
