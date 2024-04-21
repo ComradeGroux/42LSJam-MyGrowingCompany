@@ -81,6 +81,9 @@ MonoBehaviour:
   minSize: 0.01
   shaderPixel: {fileID: 0}
   meshToShrink: {fileID: 3391886538022465923}
+  groundMask:
+    serializedVersion: 2
+    m_Bits: 8
 --- !u!114 &3517418134882387905
 MonoBehaviour:
   m_ObjectHideFlags: 0
