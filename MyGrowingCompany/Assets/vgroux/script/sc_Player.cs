@@ -22,10 +22,13 @@ public class sc_Player : MonoBehaviour
 	public float gravity = -9.81f * 4f;
 
 	public Pixelation shaderPixel;
-	public float initJumpHeight = 4f;
+	public float jumpMult = 1f;
 
 	public float timeLastDmg;
 	public float invicibleTime = 1f;
+
+
+	public Transform meshToShrink;
 
 	private sc_Player_Weapon weapon;
 	private float moveHorizontal;
@@ -38,7 +41,7 @@ public class sc_Player : MonoBehaviour
 	{
 		rb = GetComponent<Rigidbody>();
 		weapon = GetComponent<sc_Player_Weapon>();
-		initialScale = transform.localScale;
+		initialScale = meshToShrink.localScale;
 		transform.Rotate(-90f, 90f, 0f);
 		loadTime = Time.time;
 		timeLastDmg = Time.time;
@@ -64,11 +67,13 @@ public class sc_Player : MonoBehaviour
 		moveHorizontal = Input.GetAxis("Horizontal");
 		if (moveHorizontal > 0.01f || moveHorizontal < -0.01f)
 		{
-			Vector3 movement = new Vector3(moveHorizontal * transform.localScale.x, rb.velocity.y, 0f);
+			Vector3 movement = new Vector3(moveHorizontal * transform.localScale.x * moveSpeed, rb.velocity.y, 0f);
 			rb.velocity = movement;
 
-			if (Mathf.Sign(movement.x) > 0f) {
-				if (lastDir != 1) { 
+			if (Mathf.Sign(movement.x) > 0f)
+			{
+				if (lastDir != 1)
+				{
 					transform.Rotate(0f, 0f, -180f);
 				}
 			}
@@ -80,15 +85,13 @@ public class sc_Player : MonoBehaviour
 				}
 			}
 			lastDir = Mathf.Sign(moveHorizontal);
-			//movement.y = movement.x;
-			//movement.x = 0;
-			//movement.z = -90f;
 		}
 
 		if (Input.GetKeyDown("space"))
 		{
-			float jumpHeight = initJumpHeight;
-			Vector3 jump = new Vector3(rb.velocity.x, CalculateJumpSpeed(jumpHeight * transform.localScale.y) * jumpSpeed, 0);
+			float jumpHeight = transform.localScale.y * jumpMult;
+			float calculatedJumpSpeed = CalculateJumpSpeed(jumpHeight);
+			Vector3 jump = new Vector3(rb.velocity.x, calculatedJumpSpeed * jumpSpeed, 0);
 			rb.velocity = jump;
 		}
 
@@ -99,10 +102,6 @@ public class sc_Player : MonoBehaviour
 		}
 	}
 
-	public void StopAttack()
-	{
-		weapon.StopAttack();
-	}
 
 	void shrinkHandler()
 	{
@@ -114,18 +113,10 @@ public class sc_Player : MonoBehaviour
 		float scaleFactor = targetScale.y;
 
 		// Set the player's scale to the target scale
-		transform.localScale = targetScale;
+		meshToShrink.localScale = targetScale;
 		
 		Vector3 scaledGravity = Vector3.up * (gravity / targetScale.y);
 		Physics.gravity = new Vector3(0, gravity * 1.5f, 0);
-
-		// Apply the scaled gravity force to the Rigidbody
-		//rb.AddForce(scaledGravity, ForceMode.Acceleration);
-	}
-	void attack()
-	{
-		// TRIGGER ANIMATION
-
 	}
 
 	public void takeDamage()
@@ -145,8 +136,7 @@ public class sc_Player : MonoBehaviour
 		shaderPixel.BlockCount -= 50;
 		if (health <= 0)
 		{
-			Debug.Log("IM DEEAAAAAD");
-			//transform.rotation = Quaternion.LookRotation(new Vector3(-90, 0, rb.velocity.x));
+			Debug.Log("The player died");
 			SceneManager.LoadScene(SceneManager.GetActiveScene().name);
 		}
 		yield return new WaitForSeconds(0.5f);
@@ -178,5 +168,4 @@ public class sc_Player : MonoBehaviour
 		// Calculate the jump speed required to reach the target jump height
 		return Mathf.Sqrt(-2f * Physics.gravity.y * targetJumpHeight);
 	}
-
 }
